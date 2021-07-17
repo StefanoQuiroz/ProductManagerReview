@@ -11,7 +11,7 @@ Content-Type: application/json
 {
     "titulo" : "Jabon",
     "precio" : "4.50 soles",
-    "descripcion" : "Jabon para el cuerpo",
+    "descripcion" : "",
     "fecha" : "2021-06-17"
 }
 
