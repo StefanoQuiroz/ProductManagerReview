@@ -1,11 +1,11 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Form , Container, Row, Col, FormGroup, Label, Input, Button } from 'reactstrap';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { MyContext } from '../views/Main';
 
-const ProductoForm = () => {
+const ProductoForm = (props) => {
     const useTitulo = useRef(null);
     const usePrecio = useRef(null);
     const useDescripcion = useRef(null);
@@ -19,9 +19,42 @@ const ProductoForm = () => {
 
     const history = useHistory();
     const {products, setProducts} = useContext(MyContext);
+    const {id} = useParams();
+    const {create, update} = props;
     //volver que refresca y lleva ala ruta home
     //Validaciones       con Swal
 
+    ///UpdateProduct
+    useEffect(()=>{
+        if(id){//me sirve para poder ver la data en el input y poder actualizar
+            axios.get(`http://localhost:8000/api/product/${id}`)
+            .then(response => setInputs(response.data.datos))// para actualizar products con lo nuevo de inputs
+            .catch(err => Swal.fire({
+                icon:'error',
+                title:'Error',
+                text: 'Ha ocurrido un error al obtener el producto especi'
+            }))
+        }
+    }, [id]);
+
+    const updateProduct = (event) => {
+        axios.put(`http://localhost:8000/api/product/update/${id}`, inputs)
+            .then(response => {
+                const index = products.findIndex(res => res._id === id);
+                products.splice(index, 1, inputs);
+                setProducts(products);
+                home(event);
+            })
+            .catch(err => Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Ha ocurrido un error al actualizar el producto'
+            }))
+    }
+
+
+
+    ///
     const createProduct = (event) => {
         axios.post("http://localhost:8000/api/product/create", inputs)
             .then(response => {
@@ -43,7 +76,7 @@ const ProductoForm = () => {
     }
 
     const home = (event) =>{
-        history.push('/');
+        history.push('/details');
     }
 
     const onChange = (event) => {
@@ -56,7 +89,13 @@ const ProductoForm = () => {
 
     const onSubmit = (event) => {
         event.preventDefault();
-        createProduct(event);
+        if(id){
+            updateProduct(event);
+        } else{
+            createProduct(event);
+        }
+
+        console.log(inputs.titulo)
 
         useTitulo.current.value="";
         usePrecio.current.value="";
@@ -73,8 +112,8 @@ const ProductoForm = () => {
                 <Row form>
                     <Col md={6}>
                     <FormGroup>
-                        <Label for="titulo">Title</Label>
-                        <Input ref={useTitulo} type="text" name="titulo" value={inputs.titulo} id="titulo" onChange={onChange}/>
+                        <Label for="Titulo">Title</Label>
+                        <Input ref={useTitulo} type="text" name="titulo" value={inputs.titulo} id="Titulo" onChange={onChange}/>
                     </FormGroup>
                     </Col>
                 </Row>
@@ -103,8 +142,13 @@ const ProductoForm = () => {
                     </Col>
                 </Row>
                 <Col sm={{ size: 7, offset: 1 }}>
-                    <Button type="submit" style={{margin: '5px', width: '50%'}}>create</Button>
+                    {create && <Button type="submit" style={{margin: '5px', width: '50%'}}>Create</Button>}
+                    {update && <Button type="submit" style={{margin: '5px', width: '50%'}}>Update</Button>}
+                    <Button type="button" style={{margin: '5px', width: '50%'}} onClick={(event) => {home(event)}}>Home</Button>
+
+                    
                 </Col>
+
             </Form>
         </Container>
     );
