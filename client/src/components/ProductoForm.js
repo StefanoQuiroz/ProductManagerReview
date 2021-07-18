@@ -114,6 +114,7 @@ const ProductoForm = (props) => {
                     <FormGroup>
                         <Label for="Titulo">Title</Label>
                         <Input ref={useTitulo} type="text" name="titulo" value={inputs.titulo} id="Titulo" onChange={onChange}/>
+                        {(inputs.titulo.length > 0 && inputs.titulo.length < 5) && <p>Ingrese un titulo con mas de 4 caracteres</p>}
                     </FormGroup>
                     </Col>
                 </Row>
@@ -122,6 +123,7 @@ const ProductoForm = (props) => {
                     <FormGroup>
                         <Label for="precio">Price</Label>
                         <Input ref={usePrecio} type="text" name="precio"  value={inputs.precio} id="precio" onChange={onChange}/>
+                        {(inputs.precio.length === 1) && <p>Ingrese un precio en numeros y en la moneda de su preferencia</p>}
                     </FormGroup>
                     </Col>
                 </Row>
@@ -130,6 +132,7 @@ const ProductoForm = (props) => {
                     <FormGroup>
                         <Label for="descripcion">Description</Label>
                         <Input ref={useDescripcion} type="text" name="descripcion" value={inputs.descripcion} id="descripcion" onChange={onChange}/>
+                        {(inputs.descripcion.length > 0 && inputs.descripcion.length < 5) && <p>Ingrese una descripción con mas de 4 caracteres</p>}
                     </FormGroup>
                     </Col>
                 </Row>
