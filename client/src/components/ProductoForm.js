@@ -1,8 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { Form , Container, Row, Col, FormGroup, Label, Input, Button } from 'reactstrap';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useHistory } from 'react-router-dom';
+import { MyContext } from '../views/Main';
 
 const ProductoForm = () => {
     const useTitulo = useRef(null);
@@ -17,7 +18,7 @@ const ProductoForm = () => {
     })
 
     const history = useHistory();
-
+    const {products, setProducts} = useContext(MyContext);
     //volver que refresca y lleva ala ruta home
     //Validaciones       con Swal
 
@@ -25,7 +26,8 @@ const ProductoForm = () => {
         axios.post("http://localhost:8000/api/product/create", inputs)
             .then(response => {
                 if(response.data.datos) {
-                    setInputs(response.data.datos);
+                    //setInputs(products.concat([response.data.datos]));
+                    setProducts(products.concat([response.data.datos]));//funcion concatena un nuevo objeto como arreglo de products general;
                     home(event);
                 } else { Swal.fire({    
                     icon: 'error',
@@ -87,7 +89,7 @@ const ProductoForm = () => {
                 <Row form>
                     <Col md={6}>
                     <FormGroup>
-                        <Label for="descripcion">Descripcion</Label>
+                        <Label for="descripcion">Description</Label>
                         <Input ref={useDescripcion} type="text" name="descripcion" value={inputs.descripcion} id="descripcion" onChange={onChange}/>
                     </FormGroup>
                     </Col>
@@ -95,7 +97,7 @@ const ProductoForm = () => {
                 <Row form>
                     <Col md={6}>
                     <FormGroup>
-                        <Label for="fecha">Fecha</Label>
+                        <Label for="fecha">Date</Label>
                         <Input ref={useFecha} type="datetime-local" name="fecha" value={inputs.fecha} id="fecha" onChange={onChange}/>
                     </FormGroup>
                     </Col>
