@@ -30,8 +30,11 @@ const Main = () => {
                         <FaPlus style={{margin:'2rem'}}/>
                     </Link> */}
                     <Switch>
+                        <Route path={`/update/:id`}>
+                            <ProductoForm update={true}/>            
+                        </Route>
                         <Route path={`/create/new`}>
-                            <ProductoForm/>            
+                            <ProductoForm create={true}/>            
                         </Route>
                         <Route path={`/details/:id`}>
                             <Details/>            
