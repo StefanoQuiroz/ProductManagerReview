@@ -1,6 +1,9 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { Row, Table} from 'reactstrap';
 import { MyContext } from '../views/Main';
+
+//crear un boton detail y que redireccione a nueva page con title, precio descripcion y fecha de producto
 
 const ProductLits = () => {
     const {products} = useContext(MyContext);
@@ -20,7 +23,7 @@ const ProductLits = () => {
                     {products && products.map((items, index) => (
                     <tr key={index}>
                         <th>&nbsp;</th>
-                        <th>{items.titulo}</th>
+                        <th><Link to={`/details/${items._id}`}>{items.titulo}</Link></th>
                         <th>{items.precio}</th>
                         <th>{items.descripcion}</th>
                         <th>{items.fecha}</th>
