@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 //import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FaPlus } from 'react-icons/fa';
+import Details from '../components/Details';
 
 export const MyContext = createContext(); 
 
@@ -25,18 +26,31 @@ const Main = () => {
         <Container>
             <MyContext.Provider value={{products, setProducts}}>
                 <Router>
-                    <Link to={`/create/new`}>
+                   {/*  <Link to={`/create/new`}>
                         <FaPlus style={{margin:'2rem'}}/>
-                    </Link>
+                    </Link> */}
                     <Switch>
                         <Route path={`/create/new`}>
                             <ProductoForm/>            
                         </Route>
+                        <Route path={`/details/:id`}>
+                            <Details/>            
+                        </Route>
                         <Route path={`/`}>
+                            <Link to={`/create/new`}>
+                                <FaPlus style={{margin:'2rem'}}/>
+                            </Link>
+                            <ProductLits/>            
+                        </Route>
+                        <Route path={`/details`}>
+                            <Link to={`/create/new`}>
+                                <FaPlus style={{margin:'2rem'}}/>
+                            </Link>
                             <ProductLits/>            
                         </Route>
                     </Switch>
                 </Router>
+                
             </MyContext.Provider>
         </Container>
     );
