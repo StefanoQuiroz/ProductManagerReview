@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Form , Container, Row, Col, FormGroup, Label, Input, Button } from 'reactstrap';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { useHistory } from 'react-router-dom';
 
 const ProductoForm = () => {
     const useTitulo = useRef(null);
@@ -12,26 +13,35 @@ const ProductoForm = () => {
         titulo:"",
         precio:"",
         descripcion:"",
-        fecha: ""
+        fecha: new Date()
     })
 
-    //volver que refresca y lleva ala ruta home       
+    const history = useHistory();
+
+    //volver que refresca y lleva ala ruta home
+    //Validaciones       con Swal
 
     const createProduct = (event) => {
         axios.post("http://localhost:8000/api/product/create", inputs)
-
             .then(response => {
-                response.data.datos ? setInputs(response.data.datos) : Swal.fire({
+                if(response.data.datos) {
+                    setInputs(response.data.datos);
+                    home(event);
+                } else { Swal.fire({    
                     icon: 'error',
                     title: 'Este campo es obligatorio',
-                    text: response.data.error.message                })
-
-            })
+                    text: response.data.error.message
+            })}})
+            
             .catch(err => Swal.fire({
                 icon: 'error',
                 title: "Error",
                 text: "Ha ocurrido un error al crear un nuevo producto"
             }))
+    }
+
+    const home = (event) =>{
+        history.push('/');
     }
 
     const onChange = (event) => {
@@ -91,7 +101,7 @@ const ProductoForm = () => {
                     </Col>
                 </Row>
                 <Col sm={{ size: 7, offset: 1 }}>
-                    <Button style={{margin: '5px', width: '50%'}} onClick={(event) => createProduct(event)}>create</Button>
+                    <Button type="submit" style={{margin: '5px', width: '50%'}}>create</Button>
                 </Col>
             </Form>
         </Container>
