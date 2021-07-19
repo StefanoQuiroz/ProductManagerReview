@@ -1,0 +1,31 @@
+###GET ALL PRODUCTS
+GET http://localhost:8000/api/product
+
+###GET ONE PRODUCT
+GET http://localhost:8000/api/product/60f31fffb1dfd15500dc269e
+
+###CREATE PRODUCT
+POST http://localhost:8000/api/product/create
+Content-Type: application/json
+
+{
+    "titulo" : "Jabon",
+    "precio" : "4.50 soles",
+    "descripcion" : "",
+    "fecha" : "2021-06-17"
+}
+
+###UPDATE PRODUCT
+PUT http://localhost:8000/api/product/update/60f31fffb1dfd15500dc269e
+Content-Type: application/json
+
+{
+    "titulo" : "Jabon",
+    "precio" : "4.50 soles",
+    "descripcion" : "Jabon para el cuerpo",
+    "fecha" : "2021-06-17"
+
+}
+
+###DELETE PRODUCT
+DELETE http://localhost:8000/api/product/delete/60f3204cb1dfd15500dc26a2
