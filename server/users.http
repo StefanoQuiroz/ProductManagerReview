@@ -1,0 +1,39 @@
+###GET ALL USERS
+GET http://localhost:8000/api/user
+
+###GET ONE PRODUCT
+GET http://localhost:8000/api/user/
+
+###CREATE PRODUCT
+POST http://localhost:8000/api/user/create
+Content-Type: application/json
+
+{
+    "nombre" : "Stefano",
+    "email" : "tefo@gmail.com",
+    "password" : "123456789",
+    "confirmPassword" : "123456789"
+}
+
+###UPDATE PRODUCT
+PUT http://localhost:8000/api/user/update/
+Content-Type: application/json
+
+{
+    "nombre" : "Stefano",
+    "email" : "tefo.quiroz@gmail.com",
+    "password" : "123456",
+    "confirmPassword" : "123456"
+}
+
+###DELETE PRODUCT
+DELETE http://localhost:8000/api/user/delete/
+
+###LOGIN
+POST http://localhost:8000/api/login
+Content-Type: application/json
+
+{
+    "email" : "tefo@gmail.com",
+    "password" : "123456789"
+}
