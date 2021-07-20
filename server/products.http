@@ -9,10 +9,10 @@ POST http://localhost:8000/api/product/create
 Content-Type: application/json
 
 {
-    "titulo" : "Jabon",
-    "precio" : "4.50 soles",
+    "titulo" : "",
+    "precio" : "",
     "descripcion" : "",
-    "fecha" : "2021-06-17"
+    "fecha" : ""
 }
 
 ###UPDATE PRODUCT

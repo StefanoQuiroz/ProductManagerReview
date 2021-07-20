@@ -29,7 +29,7 @@ const updateProduct = (req, res) => {
         .then(result => res.json({datos:result}))
         .catch(err => {
             res.json({error:err});
-            res.sendStatus(500);
+            res.sendStatus(400);
         })
 }
 const deleteProduct = (req, res) => {
@@ -37,7 +37,7 @@ const deleteProduct = (req, res) => {
         .then(result => res.json({datos:result}))
         .catch(err => {
             res.json({error:err});
-            res.sendStatus(404);
+            res.sendStatus(400);
         })
 }
 
