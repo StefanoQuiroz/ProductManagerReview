@@ -32,7 +32,7 @@ const ProductoForm = (props) => {
             .catch(err => Swal.fire({
                 icon:'error',
                 title:'Error',
-                text: 'Ha ocurrido un error al obtener el producto especi'
+                text: 'Ha ocurrido un error al obtener el producto especifico'
             }))
         }
     }, [id]);
